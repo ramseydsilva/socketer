@@ -1,0 +1,31 @@
+{
+  "name": "socketer",
+  "version": "0.0.1",
+  "description": "Socket.io utility to test node.js express applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ramseydsilva/socketer"
+  },
+  "keywords": [
+    "socket.io",
+    "tdd",
+    "test",
+    "node.js",
+    "node",
+    "express"
+  ],
+  "author": "Ramsey D'silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramseydsilva/socketer/issues"
+  },
+  "homepage": "https://github.com/ramseydsilva/socketer",
+  "dependencies": {
+    "request": "^2.34.0",
+    "socket.io-client": "^0.9.16"
+  }
+}
