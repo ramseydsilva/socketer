@@ -1,11 +1,11 @@
 socketer
 ========
 
-Socket.io utility for testing socket.io/node applications. 
+Socket.io utility for testing socket.io/express applications. 
 
 ## Installation
 
-`npm install socketer`
+`npm install --save-dev socketer`
 
 ## Usage
 
