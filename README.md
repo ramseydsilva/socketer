@@ -12,7 +12,7 @@ Socket.io utility for testing socket.io/node applications.
 This lib provides two methods:
 
 1. anonSocket
-1. authSocket
+2. authSocket
 
 ### anonSocket
 
@@ -23,11 +23,12 @@ use to poll your server as an anonymous user.
 var socketer = request('socketer');
 
 socketer.anonSocket(app, function(socket) {
-  socket.on('connect', function() {
+  socket.once('connect', function() {
     console.log('I am connected!');
   });
-  socket.on('my-event', function() {
+  socket.once('my-event', function() {
     console.log('My event is happening');
+    socket.disconnect(); // Call this to disconnect after your function to uninterupt further connect events
   });
 };
 ```
@@ -41,11 +42,19 @@ callback that returns an anonymous socket that you can use to poll your server a
 var socketer = request('socketer');
 
 socketer.authSocket(app, {'username': 'Ramsey', 'password': 'Ramseypass'}, '/login', function(socket) {
-  socket.on('connect', function() {
+  socket.once('connect', function() {
     console.log('I am connected as Ramsey!');
   });
 });
 ```
+
+## Tips
+
+1. After every test and before you call the done method, you can choose to disconnect the socket by calling 
+`socket.disconnect();`. This ensures uninterupted successive socket reconnects.
+2. Instead of using `socket.on(event)`, consider using `socket.once(event)` in your tests. This ensures the event 
+listener stops listening if the event occurs in successive tests.
+
 
 ## Requirements
 
@@ -53,8 +62,8 @@ This library simulates the a client socket using socket.io-client package. Diffe
 differ in its implementation. During the time time of writing this lib, the versions I was using was:
 
 1. express: ~3.5.1
-1. socket.io: ~0.9.16
-1. socket.io-client: ^0.9.16
+2. socket.io: ~0.9.16
+3. socket.io-client: ^0.9.16
 
 ## Issues
 
