@@ -3,16 +3,21 @@ socketer
 
 Socket.io utility for testing socket.io/node applications. 
 
+## Installation
+
+`npm install socketer`
+
 ## Usage
 
 This lib provides two methods:
+
 1. anonSocket
 1. authSocket
 
-## anonSocket
+### anonSocket
 
 anonSocket takes your express app as an argument and a callback that returns an anonymous socket that you can
-use to poll your server.
+use to poll your server as an anonymous user.
 
 ```
 var socketer = request('socketer');
@@ -27,7 +32,10 @@ socketer.anonSocket(app, function(socket) {
 };
 ```
 
-## authSocket
+### authSocket
+
+authSocket takes your express app as an argument, login credentials in the form of a dict, login url,  and a 
+callback that returns an anonymous socket that you can use to poll your server as an anonymous user.
 
 ```
 var socketer = request('socketer');
@@ -37,11 +45,13 @@ socketer.authSocket(app, {'username': 'Ramsey', 'password': 'Ramseypass'}, '/log
     console.log('I am connected as Ramsey!');
   });
 });
+```
 
 ## Requirements
 
-It's key to note what versions of express, socket.io, socket.io-client you use so you can
-effectively use this library. During the time of writing this app, the versions where the following:
+This library simulates the a client socket using socket.io-client package. Different versions of this package might
+differ in its implementation. During the time time of writing this lib, the versions I was using was:
+
 1. express: ~3.5.1
 1. socket.io: ~0.9.16
 1. socket.io-client: ^0.9.16
