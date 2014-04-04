@@ -1,11 +1,11 @@
 socketer
 ========
 
-Socket.io utility for testing socket.io/node applications. 
+Socket.io utility for testing socket.io/express applications. 
 
 ## Installation
 
-`npm install socketer`
+`npm install --save-dev socketer`
 
 ## Usage
 
@@ -23,29 +23,55 @@ use to poll your server as an anonymous user.
 var socketer = request('socketer');
 
 socketer.anonSocket(app, function(socket) {
+
   socket.once('connect', function() {
     console.log('I am connected!');
   });
+  
   socket.once('my-event', function() {
+  
     console.log('My event is happening');
     socket.disconnect(); // Call this to disconnect after your function to uninterupt further connect events
   });
+  
 };
 ```
 
 ### authSocket
 
 authSocket takes your express app as an argument, login credentials in the form of a dict, login url,  and a 
-callback that returns an anonymous socket that you can use to poll your server as an anonymous user.
+callback that returns a socket that has been authenticated via the login url.
 
 ```
 var socketer = request('socketer');
 
 socketer.authSocket(app, {'username': 'Ramsey', 'password': 'Ramseypass'}, '/login', function(socket) {
+
   socket.once('connect', function() {
     console.log('I am connected as Ramsey!');
   });
+  
 });
+```
+
+The login url accepts a post method, and csrf has to be turned off for testing. In your app.js file, you can have something like:
+
+```
+if (process.env.NODE_ENV == 'production') {
+    app.use(express.csrf());
+    app.use(function(req, res, next) {
+        res.locals.token = req.csrfToken();
+    });
+};
+
+// or
+
+if (process.env.NODE_ENV != 'mochaTesting') {
+    app.use(express.csrf());
+    app.use(function(req, res, next) {
+        res.locals.token = req.csrfToken();
+    });
+};
 ```
 
 ## Tips
@@ -56,9 +82,9 @@ socketer.authSocket(app, {'username': 'Ramsey', 'password': 'Ramseypass'}, '/log
 listener stops listening if the event occurs in successive tests.
 
 
-## Requirements
+## Dependencies
 
-This library simulates the a client socket using socket.io-client package. Different versions of this package might
+This library simulates the client socket using [socket.io-client](https://github.com/LearnBoost/socket.io-client) package. Different versions of this package might
 differ in its implementation. During the time time of writing this lib, the versions I was using was:
 
 1. express: ~3.5.1
