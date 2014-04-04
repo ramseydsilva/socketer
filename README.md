@@ -23,13 +23,17 @@ use to poll your server as an anonymous user.
 var socketer = request('socketer');
 
 socketer.anonSocket(app, function(socket) {
+
   socket.once('connect', function() {
     console.log('I am connected!');
   });
+  
   socket.once('my-event', function() {
+  
     console.log('My event is happening');
     socket.disconnect(); // Call this to disconnect after your function to uninterupt further connect events
   });
+  
 };
 ```
 
@@ -42,9 +46,11 @@ callback that returns an anonymous socket that you can use to poll your server a
 var socketer = request('socketer');
 
 socketer.authSocket(app, {'username': 'Ramsey', 'password': 'Ramseypass'}, '/login', function(socket) {
+
   socket.once('connect', function() {
     console.log('I am connected as Ramsey!');
   });
+  
 });
 ```
 
@@ -56,9 +62,9 @@ socketer.authSocket(app, {'username': 'Ramsey', 'password': 'Ramseypass'}, '/log
 listener stops listening if the event occurs in successive tests.
 
 
-## Requirements
+## Dependencies
 
-This library simulates the a client socket using socket.io-client package. Different versions of this package might
+This library simulates the client socket using [socket.io-client](https://github.com/LearnBoost/socket.io-client) package. Different versions of this package might
 differ in its implementation. During the time time of writing this lib, the versions I was using was:
 
 1. express: ~3.5.1
