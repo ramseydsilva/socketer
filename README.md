@@ -40,7 +40,7 @@ socketer.anonSocket(app, function(socket) {
 ### authSocket
 
 authSocket takes your express app as an argument, login credentials in the form of a dict, login url,  and a 
-callback that returns an anonymous socket that you can use to poll your server as an anonymous user.
+callback that returns a socket that has been authenticated via the login url.
 
 ```
 var socketer = request('socketer');
@@ -52,6 +52,26 @@ socketer.authSocket(app, {'username': 'Ramsey', 'password': 'Ramseypass'}, '/log
   });
   
 });
+```
+
+The login url accepts a post method, and csrf has to be turned off for testing. In your app.js file, you can have something like:
+
+```
+if (process.env.NODE_ENV == 'production') {
+    app.use(express.csrf());
+    app.use(function(req, res, next) {
+        res.locals.token = req.csrfToken();
+    });
+};
+
+// or
+
+if (process.env.NODE_ENV != 'mochaTesting') {
+    app.use(express.csrf());
+    app.use(function(req, res, next) {
+        res.locals.token = req.csrfToken();
+    });
+};
 ```
 
 ## Tips
