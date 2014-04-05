@@ -1,6 +1,6 @@
 {
   "name": "socketer",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
     "request": {
       "version": "2.34.0",
