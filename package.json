@@ -1,6 +1,6 @@
 {
   "name": "socketer",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Socket.io utility to test node.js express applications",
   "main": "index.js",
   "scripts": {
