@@ -9,12 +9,17 @@ Socket.io utility for testing socket.io/express applications.
 
 ## Usage
 
-This lib provides two methods:
+This lib provides 5 methods:
 
-1. anonSocket
-2. authSocket
+1. [anonSocket](anonSocket)
+2. [authSocket](authSocket)
+3. [anonRequest](anonRequest)
+4. [authRequest](authRequest)
+5. [getUrl](getUrl)
 
-### anonSocket
+Comprehensive documentation exists here: http://socketer.ramseydsilva.com/global.html#anonRequest
+
+### [anonSocket](anonSocket)
 
 anonSocket takes your express app as an argument and a callback that returns an anonymous socket that you can
 use to poll your server as an anonymous user.
@@ -37,7 +42,7 @@ socketer.anonSocket(app, function(socket) {
 };
 ```
 
-### authSocket
+### [authSocket](authSocket)
 
 authSocket takes your express app as an argument, login credentials in the form of a dict, login url,  and a 
 callback that returns a socket that has been authenticated via the login url.
@@ -74,6 +79,33 @@ if (process.env.NODE_ENV != 'mochaTesting') {
 };
 ```
 
+## [anonRequest](anonRequest)
+
+This method attempts a logout before fetching your request, just in case your request module has previously been
+configured to save cookies (like we do in ours). You can optionally specify a logout url. The default is '/logout'.
+```
+socketer.anonRequest(app, album.editUrl, '/alt-logout', function(err, res) {
+    res.statusCode.should.be.exactly(403);
+});
+```
+
+## [authRequest](authRequest)
+
+This method logs a user in. It takes a dict containing the post params to the login page. The default login url is '/login', but you can optionally specify your own.
+```
+socketer.authRequest(app, album.editUrl, {email: user.email, password: user.profile.passwordString}, function(err, res) { 
+    res.statusCode.should.be.exactly(200);
+});
+```
+
+## [getUrl](getUrl)
+
+This helper method takes in your express app and a root relative path and constructs an absolute url. It also takes an optional protocol such as 'http' or 'ws' etc. The default is 'http'.
+```
+console.log(socketer.getUrl(app, post.editUrl, 'ws');
+// prints ws://127.0.0.1:4000/posts/1234/edit
+```
+
 ## Tips
 
 1. After every test and before you call the done method, you can choose to disconnect the socket by calling 
@@ -101,3 +133,9 @@ https://github.com/ramseydsilva/socketer/issues
 
 This library was inspired by the following gist:
 https://gist.github.com/jfromaniello/4087861
+
+[anonSocket]: http://socketer.ramseydsilva.com/global.html#anonSocket
+[authSocket]: http://socketer.ramseydsilva.com/global.html#authSocket
+[anonRequest]: http://socketer.ramseydsilva.com/global.html#anonRequest
+[authRequest]: http://socketer.ramseydsilva.com/global.html#authRequest
+[getUrl]: http://socketer.ramseydsilva.com/global.html#getUrl
