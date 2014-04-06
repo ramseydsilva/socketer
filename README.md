@@ -11,15 +11,15 @@ Socket.io utility for testing socket.io/express applications.
 
 This lib provides 5 methods:
 
-1. [anonSocket](anonSocket)
-2. [authSocket](authSocket)
-3. [anonRequest](anonRequest)
-4. [authRequest](authRequest)
-5. [getUrl](getUrl)
+1. [anonSocket][anonSocket]
+2. [authSocket][authSocket]
+3. [anonRequest][anonRequest]
+4. [authRequest][authRequest]
+5. [getUrl][getUrl]
 
 Comprehensive documentation exists here: http://socketer.ramseydsilva.com/global.html#anonRequest
 
-### [anonSocket](anonSocket)
+### [anonSocket][anonSocket]
 
 anonSocket takes your express app as an argument and a callback that returns an anonymous socket that you can
 use to poll your server as an anonymous user.
@@ -42,7 +42,7 @@ socketer.anonSocket(app, function(socket) {
 };
 ```
 
-### [authSocket](authSocket)
+### [authSocket][authSocket]
 
 authSocket takes your express app as an argument, login credentials in the form of a dict, login url,  and a 
 callback that returns a socket that has been authenticated via the login url.
@@ -79,7 +79,7 @@ if (process.env.NODE_ENV != 'mochaTesting') {
 };
 ```
 
-## [anonRequest](anonRequest)
+## [anonRequest][anonRequest]
 
 This method attempts a logout before fetching your request, just in case your request module has previously been
 configured to save cookies (like we do in ours). You can optionally specify a logout url. The default is '/logout'.
@@ -89,7 +89,7 @@ socketer.anonRequest(app, album.editUrl, '/alt-logout', function(err, res) {
 });
 ```
 
-## [authRequest](authRequest)
+## [authRequest][authRequest]
 
 This method logs a user in. It takes a dict containing the post params to the login page. The default login url is '/login', but you can optionally specify your own.
 ```
@@ -98,7 +98,7 @@ socketer.authRequest(app, album.editUrl, {email: user.email, password: user.prof
 });
 ```
 
-## [getUrl](getUrl)
+## [getUrl][getUrl]
 
 This helper method takes in your express app and a root relative path and constructs an absolute url. It also takes an optional protocol such as 'http' or 'ws' etc. The default is 'http'.
 ```
